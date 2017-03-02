@@ -77,12 +77,9 @@
 		3F614D391E6825BD006AEC13 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				3F614D3A1E6825BD006AEC13 /* AppDelegate.swift */,
 				3F614D3C1E6825BD006AEC13 /* ViewController.swift */,
 				3F614D3E1E6825BD006AEC13 /* Main.storyboard */,
-				3F614D411E6825BD006AEC13 /* Assets.xcassets */,
-				3F614D431E6825BD006AEC13 /* LaunchScreen.storyboard */,
-				3F614D461E6825BD006AEC13 /* Info.plist */,
+				3F614D5A1E6825FE006AEC13 /* Supporting Files */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -94,6 +91,17 @@
 				3F614D511E6825BD006AEC13 /* Info.plist */,
 			);
 			path = CalculatorTests;
+			sourceTree = "<group>";
+		};
+		3F614D5A1E6825FE006AEC13 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3F614D411E6825BD006AEC13 /* Assets.xcassets */,
+				3F614D431E6825BD006AEC13 /* LaunchScreen.storyboard */,
+				3F614D3A1E6825BD006AEC13 /* AppDelegate.swift */,
+				3F614D461E6825BD006AEC13 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -344,7 +352,7 @@
 				DEVELOPMENT_TEAM = A94N38QHKK;
 				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = na.Calculator;
+				PRODUCT_BUNDLE_IDENTIFIER = willy.Calculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -357,7 +365,7 @@
 				DEVELOPMENT_TEAM = A94N38QHKK;
 				INFOPLIST_FILE = Calculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = na.Calculator;
+				PRODUCT_BUNDLE_IDENTIFIER = willy.Calculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
