@@ -10,14 +10,51 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBOutlet weak var display: UILabel!
+
+    var isUserInMiddleTyping: Bool = false
+    
+    
+    @IBAction func touchDigit(_ sender: UIButton) {
+        let digit = sender.currentTitle!
+        
+        if isUserInMiddleTyping {
+            let currentDisplayText = display.text!
+            display.text = currentDisplayText + digit
+        }
+        else {
+            display.text = digit
+            isUserInMiddleTyping = true
+        }
+        
+    }
+    
+    var disPlayValue: Double {
+        get {
+            return Double(display.text!)!
+        }
+        set {
+            display.text = String(newValue)
+        }
+    }
+    
+    private var brain = CalculatorBrain()
+    
+    @IBAction func performOperation(_ sender: UIButton) {
+        if isUserInMiddleTyping {
+            brain.setOperand(disPlayValue)
+            isUserInMiddleTyping = false
+        }
+        
+        if let mathmaticalSymbol = sender.currentTitle {
+            brain.performOperation(mathmaticalSymbol)
+        }
+        
+        if let result = brain.result {
+            disPlayValue = result
+        }
+        
     }
 
 
