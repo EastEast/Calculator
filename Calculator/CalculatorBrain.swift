@@ -8,10 +8,22 @@
 
 import Foundation
 
-struct CalculatorBrain{
+struct CalculatorBrain {
     
     
     private var accumulator: Double?
+    
+    private var pendingBinaryOperation: PendingBinaryOperation?
+    
+    var result: Double? {
+        get{
+            return accumulator
+        }
+    }
+    
+    var resultsPending: Bool = false
+    
+    var descriptions: String = ""
     
     private enum Operation {
         case constant(Double)
@@ -25,8 +37,13 @@ struct CalculatorBrain{
         "e" : Operation.constant(M_E),
         "√" : Operation.unaryOperation(sqrt),
         "cos": Operation.unaryOperation(cos),
+        "log" : Operation.unaryOperation(log10),
+        "x²" : Operation.unaryOperation({ pow($0, 2) }),
         "±" : Operation.unaryOperation({ -$0 }),
+        "+" : Operation.binaryOperation({ $0 + $1 }),
+        "−" : Operation.binaryOperation({ $0 - $1 }),
         "×" : Operation.binaryOperation({ $0 * $1 }),
+        "÷" : Operation.binaryOperation({ $0 / $1 }),
         "=" : Operation.equals
     ]
     
@@ -37,19 +54,25 @@ struct CalculatorBrain{
             switch operation {
             case .constant(let value):
                 accumulator = value
+                descriptions = symbol
             case .unaryOperation(let function):
                 if accumulator != nil {
+                    descriptions = symbol + "(" + String(accumulator!) + ")"
                     accumulator = function(accumulator!)
+                    
                 }
-            
             case .binaryOperation(let function):
+                resultsPending = true
                 if accumulator != nil {
                     pendingBinaryOperation = PendingBinaryOperation(function: function, firstOperand: accumulator!)
                     accumulator = nil
+                    descriptions = symbol + "..."
                 }
-            
             case .equals:
+                resultsPending = false
                 performPendingBinaryOperation()
+                descriptions = symbol + "＝"
+
             }
         }
     }
@@ -62,7 +85,9 @@ struct CalculatorBrain{
         
     }
     
-    private var pendingBinaryOperation: PendingBinaryOperation?
+    mutating func setOperand(_ operand: Double) {
+        accumulator = operand
+    }
     
     private struct PendingBinaryOperation {
         let function: (Double, Double) -> Double
@@ -73,14 +98,5 @@ struct CalculatorBrain{
         }
     }
     
-    mutating func setOperand(_ operand: Double) {
-        accumulator = operand
-    }
-    
-    var result: Double? {
-        get{
-            return accumulator
-        }
-    }
     
 }

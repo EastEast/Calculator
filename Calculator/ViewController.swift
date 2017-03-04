@@ -10,25 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
-
     @IBOutlet weak var display: UILabel!
-
+    @IBOutlet weak var displayDescriptions: UILabel!
+    
+    private var brain = CalculatorBrain()
+    
     var isUserInMiddleTyping: Bool = false
-    
-    
-    @IBAction func touchDigit(_ sender: UIButton) {
-        let digit = sender.currentTitle!
-        
-        if isUserInMiddleTyping {
-            let currentDisplayText = display.text!
-            display.text = currentDisplayText + digit
-        }
-        else {
-            display.text = digit
-            isUserInMiddleTyping = true
-        }
-        
-    }
+    var didTouchFloat: Bool = false
     
     var disPlayValue: Double {
         get {
@@ -39,7 +27,24 @@ class ViewController: UIViewController {
         }
     }
     
-    private var brain = CalculatorBrain()
+    @IBAction func touchDigit(_ sender: UIButton) {
+        let digit = sender.currentTitle!
+        
+        if isUserInMiddleTyping {
+            let currentDisplayText = display.text!
+            display.text = (digit == "." && currentDisplayText.contains(".")) ? currentDisplayText : currentDisplayText + digit
+            let currentDescription = displayDescriptions.text!
+            displayDescriptions.text = brain.resultsPending ? currentDescription + display.text! : display.text
+        }
+        else {
+            display.text = digit == "." ? "0" + digit : digit
+            isUserInMiddleTyping = true
+            let currentDescription = displayDescriptions.text!
+            displayDescriptions.text = brain.resultsPending ? currentDescription + display.text! : display.text
+        }
+        
+        
+    }
     
     @IBAction func performOperation(_ sender: UIButton) {
         if isUserInMiddleTyping {
@@ -55,6 +60,7 @@ class ViewController: UIViewController {
             disPlayValue = result
         }
         
+        displayDescriptions.text = displayDescriptions.text! + brain.descriptions
     }
 
 
