@@ -16,7 +16,6 @@ class ViewController: UIViewController {
     private var brain = CalculatorBrain()
     
     var isUserInMiddleTyping: Bool = false
-    var didTouchFloat: Bool = false
     
     var disPlayValue: Double {
         get {
@@ -29,13 +28,12 @@ class ViewController: UIViewController {
     
     @IBAction func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
-        
         if isUserInMiddleTyping {
             let currentDisplayText = display.text!
             display.text = (digit == "." && currentDisplayText.contains(".")) ? currentDisplayText : currentDisplayText + digit
         }
         else {
-            display.text = digit == "." ? "0" + digit : digit
+            display.text = (digit == ".") ? "0" + digit : digit
             isUserInMiddleTyping = true
         }
     }
@@ -54,15 +52,17 @@ class ViewController: UIViewController {
             disPlayValue = result
         }
         
-        if brain.resultsPending {
-            displayDescriptions.text = brain.descriptions + "..."
+        if let resultDescription = brain.descriptions {
+            if brain.resultsPending {
+                displayDescriptions.text = resultDescription + "..."
+            }
+            else{
+                displayDescriptions.text = resultDescription + "="
+            }
         }
         else{
-            displayDescriptions.text = brain.descriptions
+            displayDescriptions.text = " "
         }
-        
     }
-
-
 }
 
