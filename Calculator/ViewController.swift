@@ -33,17 +33,11 @@ class ViewController: UIViewController {
         if isUserInMiddleTyping {
             let currentDisplayText = display.text!
             display.text = (digit == "." && currentDisplayText.contains(".")) ? currentDisplayText : currentDisplayText + digit
-            let currentDescription = displayDescriptions.text!
-            displayDescriptions.text = brain.resultsPending ? currentDescription + display.text! : display.text
         }
         else {
             display.text = digit == "." ? "0" + digit : digit
             isUserInMiddleTyping = true
-            let currentDescription = displayDescriptions.text!
-            displayDescriptions.text = brain.resultsPending ? currentDescription + display.text! : display.text
         }
-        
-        
     }
     
     @IBAction func performOperation(_ sender: UIButton) {
@@ -60,7 +54,13 @@ class ViewController: UIViewController {
             disPlayValue = result
         }
         
-        displayDescriptions.text = displayDescriptions.text! + brain.descriptions
+        if brain.resultsPending {
+            displayDescriptions.text = brain.descriptions + "..."
+        }
+        else{
+            displayDescriptions.text = brain.descriptions
+        }
+        
     }
 
 
