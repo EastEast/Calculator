@@ -83,7 +83,7 @@ struct CalculatorBrain {
                 performPendingBinaryOperation()
                 resultsPending = false
             case .allClear:
-                descriptions = " "
+                descriptions = nil
                 resultsPending = false
                 pendingBinaryOperation = nil
                 accumulator = 0.0
